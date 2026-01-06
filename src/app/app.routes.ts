@@ -15,7 +15,7 @@ export const routes: Routes = [
     component: Login
   },
   {
-    path: 'admin',
+    path: '',
     component: Layout,
     children: [
       {
@@ -24,7 +24,7 @@ export const routes: Routes = [
       },
       {
         path:'dashboard',
-        component:Dashboard
+        component: Dashboard
       }
     ]
   }

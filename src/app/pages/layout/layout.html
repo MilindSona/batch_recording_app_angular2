@@ -1,1 +1,79 @@
-<p>layout works!</p>
+<div class="d-flex">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <i class="bi bi-layers-fill me-2"></i>
+                <span>NexusDash</span>
+            </div>
+
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-graph-up"></i> Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-wallet2"></i> Payments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-people"></i> Customers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-gear"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="profile-section">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="https://ui-avatars.com/api/?name=Alex+Doe&background=6366f1&color=fff" class="rounded-circle" width="40" alt="Avatar">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="mb-0 fw-bold" style="font-size: 0.9rem;">{{currentUserData.email}}</p>
+                        <small class="text-muted">Pro Account</small>
+                    </div>
+                    <a href="#" class="text-muted"><i class="bi bi-box-arrow-right"></i></a>
+                </div>
+                <button (click)="logout()">Logoff</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="mb-4">
+                <h2>Dashboard Overview</h2>
+                <p class="text-muted">Welcome back! Here is what's happening today.</p>
+            </header>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Total Revenue</h6>
+                        <h3>$24,500</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Active Users</h6>
+                        <h3>1,240</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Conversion Rate</h6>
+                        <h3>3.42%</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+<router-outlet></router-outlet>
