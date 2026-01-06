@@ -3,6 +3,7 @@ import { Login } from './pages/login/login';
 import { Layout } from './pages/layout/layout';
 import { Bachmaster } from './pages/bachmaster/bachmaster';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { authGuard } from './core/guard/auth-guard';
 
 export const routes: Routes = [
   {
@@ -24,7 +25,8 @@ export const routes: Routes = [
       },
       {
         path:'dashboard',
-        component: Dashboard
+        component: Dashboard,
+        canActivate: [authGuard]
       }
     ]
   }

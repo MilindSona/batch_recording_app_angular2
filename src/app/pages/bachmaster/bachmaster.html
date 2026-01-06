@@ -1,1 +1,96 @@
-<p>bachmaster works!</p>
+<div class="parent-div">
+<div class="layout">
+    <aside class="glass-card">
+        <div class="card-title">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add New Batch</span>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <div class="label-wrap"><i class="fa-solid fa-hashtag"></i> Batch ID</div>
+                <input type="text" placeholder="Auto-generated ID" readonly>
+            </div>
+
+            <div class="form-group">
+                <div class="label-wrap"><i class="fa-solid fa-font"></i> Batch Name</div>
+                <input type="text" placeholder="Enter batch name...">
+            </div>
+
+            <div class="form-group">
+                <div class="label-wrap"><i class="fa-solid fa-align-left"></i> Description</div>
+                <textarea rows="3" placeholder="Enter batch description..."></textarea>
+            </div>
+
+            <div class="date-grid">
+                <div class="form-group">
+                    <div class="label-wrap"><i class="fa-solid fa-calendar-day"></i> Start</div>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <div class="label-wrap"><i class="fa-solid fa-calendar-check"></i> End</div>
+                    <input type="date">
+                </div>
+            </div>
+
+            <div class="switch-area">
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+                <span>Active Status</span>
+            </div>
+
+            <button type="button" class="btn-submit">Add Batch</button>
+        </form>
+    </aside>
+
+    <main class="glass-card">
+        <div class="card-title">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Batch List</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Batch Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#101</td>
+                    <td>Spring 2026</td>
+                    <td>2026-01-01</td>
+                    <td>2026-06-30</td>
+                    <td><span class="status-badge badge-active"><i class="fa-solid fa-circle-check"></i> Active</span></td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="action-btn delete"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#102</td>
+                    <td>Summer 2026</td>
+                    <td>2026-07-01</td>
+                    <td>2026-09-30</td>
+                    <td><span class="status-badge badge-inactive"><i class="fa-solid fa-circle"></i> Inactive</span></td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="action-btn delete"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</div>
