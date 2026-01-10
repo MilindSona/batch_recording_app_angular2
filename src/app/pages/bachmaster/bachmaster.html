@@ -1,96 +1,122 @@
-<div class="parent-div">
-<div class="layout">
-    <aside class="glass-card">
-        <div class="card-title">
-            <i class="fa-solid fa-plus"></i>
-            <span>Add New Batch</span>
+<div class="parent-container">
+<div class="container my-4">
+
+    <!-- Header -->
+    <div class="section-header text-center mb-4">
+      <h1 class="fw-bold mb-2">Batch Management System</h1>
+      <p class="text-muted mb-0">
+        Create, View, Update, and Delete Batches
+      </p>
+    </div>
+
+    <!-- Main Row -->
+    <div class="row g-3">
+
+      <!-- LEFT: Create/Edit -->
+      <div class="col-lg-5 col-md-12">
+        <div class="card h-100">
+
+          <div class="card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-plus-circle"></i> Create / Edit Batch
+            </h5>
+          </div>
+
+          <div class="card-body">
+            <form>
+
+              <div class="mb-3">
+                <label class="form-label">Batch Name</label>
+                <input name="batchName" type="text" [(ngModel)]="newBatchObj.batchName" class="form-control" placeholder="Enter batch name" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <input name="description" type="text" [(ngModel)]="newBatchObj.description" class="form-control" placeholder="Enter description" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Start Date</label>
+                <input name="startDate" type="date" [(ngModel)]="newBatchObj.startDate" class="form-control" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">End Date</label>
+                <input name="endDate" type="date" [(ngModel)]="newBatchObj.endDate" class="form-control" />
+              </div>
+
+              <div class="form-check mb-4">
+                <input name="isActive" class="form-check-input" [(ngModel)]="newBatchObj.isActive" type="checkbox" checked />
+                <label class="form-check-label">Active Status</label>
+              </div>
+
+              <div class="d-flex gap-2">
+                <button class="btn btn-primary w-50" (click)="onSaveBatch()">
+                  <i class="bi bi-save"></i>Create Batch
+                </button>
+                <button class="btn btn-secondary w-50">
+                  Reset
+                </button>
+              </div>
+
+            </form>
+          </div>
         </div>
+      </div>
 
-        <form>
-            <div class="form-group">
-                <div class="label-wrap"><i class="fa-solid fa-hashtag"></i> Batch ID</div>
-                <input type="text" placeholder="Auto-generated ID" readonly>
-            </div>
+      <!-- RIGHT: Batch List -->
+      <div class="col-lg-7 col-md-12">
+        <div class="card h-100">
 
-            <div class="form-group">
-                <div class="label-wrap"><i class="fa-solid fa-font"></i> Batch Name</div>
-                <input type="text" placeholder="Enter batch name...">
-            </div>
+          <div class="card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-table"></i> Batch List
+            </h5>
+          </div>
 
-            <div class="form-group">
-                <div class="label-wrap"><i class="fa-solid fa-align-left"></i> Description</div>
-                <textarea rows="3" placeholder="Enter batch description..."></textarea>
-            </div>
-
-            <div class="date-grid">
-                <div class="form-group">
-                    <div class="label-wrap"><i class="fa-solid fa-calendar-day"></i> Start</div>
-                    <input type="date">
-                </div>
-                <div class="form-group">
-                    <div class="label-wrap"><i class="fa-solid fa-calendar-check"></i> End</div>
-                    <input type="date">
-                </div>
-            </div>
-
-            <div class="switch-area">
-                <label class="switch">
-                    <input type="checkbox" checked>
-                    <span class="slider"></span>
-                </label>
-                <span>Active Status</span>
-            </div>
-
-            <button type="button" class="btn-submit">Add Batch</button>
-        </form>
-    </aside>
-
-    <main class="glass-card">
-        <div class="card-title">
-            <i class="fa-solid fa-list-check"></i>
-            <span>Batch List</span>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
                     <th>ID</th>
-                    <th>Batch Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>Name</th>
+                    <th>Start</th>
+                    <th>End</th>
                     <th>Status</th>
-                    <th style="text-align: right;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>#101</td>
-                    <td>Spring 2026</td>
-                    <td>2026-01-01</td>
-                    <td>2026-06-30</td>
-                    <td><span class="status-badge badge-active"><i class="fa-solid fa-circle-check"></i> Active</span></td>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for(item of BatchList(); track $index){
+                    <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{item.batchName}}</td>
+                    <td>{{item.startDate | date:'dd-MMM-yy'}}</td>
+                    <td>{{item.endDate | date:'dd-MMM-yy'}}</td>
                     <td>
-                        <div class="actions">
-                            <button class="action-btn edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="action-btn delete"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                      <span class="badge badge-active" [ngClass]="item.isActive?'badge-active':'badge-inactive'">{{item.isActive?'Active':'In-Active'}}</span>
                     </td>
-                </tr>
-                <tr>
-                    <td>#102</td>
-                    <td>Summer 2026</td>
-                    <td>2026-07-01</td>
-                    <td>2026-09-30</td>
-                    <td><span class="status-badge badge-inactive"><i class="fa-solid fa-circle"></i> Inactive</span></td>
                     <td>
-                        <div class="actions">
-                            <button class="action-btn edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="action-btn delete"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                      <button class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
                     </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
-</div>
+
+

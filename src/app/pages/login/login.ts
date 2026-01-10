@@ -16,6 +16,8 @@ export class Login {
     email:"",
     password:""
   }
+  showPassword = false;
+
 
   onLogin(){
     this.http.post('https://feestracking.freeprojectapi.com/api/BatchUser/login',this.loginObj).subscribe({
@@ -29,4 +31,8 @@ export class Login {
     })
   }
 
+  
+togglePassword() {
+  this.showPassword = !this.showPassword;
+}
 }

@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { GLOBAL_CONSTANT } from '../../constants/global.constant';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,RouterLink],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })
@@ -12,14 +13,14 @@ currentUserData:any;
 router=inject(Router);
 
 constructor(){
-  const localData=localStorage.getItem('batchuser')
+  const localData=localStorage.getItem(GLOBAL_CONSTANT.LOCAL_KEY_LOGIN)
   if(localData!=null){
     this.currentUserData=JSON.parse(localData);
   }
 }
 
 logout(){
-  localStorage.removeItem('batchuser');
-  this.router.navigate(['login']);
+  localStorage.removeItem(GLOBAL_CONSTANT.LOCAL_KEY_LOGIN);
+  this.router.navigate(['login']); // navigate expects array 
 }
 }

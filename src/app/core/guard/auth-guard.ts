@@ -8,10 +8,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   debugger;
   const router=inject(Router);
   const localData = localStorage.getItem(GLOBAL_CONSTANT.LOCAL_KEY_LOGIN);
-  if(localData!=null){
+  if(localData!=null){ // you have check null ceck only not undefined !!!
     return true
   }else{
-    router.navigateByUrl('login');
+    router.navigateByUrl('/login');
     return false;
   }
   

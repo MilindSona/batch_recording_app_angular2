@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        .parent { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #ffffff; 
+        }
+
+        .header-gradient {
+            background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-active {
+            background-color: #10b981;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+        }
+          .status-inactive {
+            background-color: #b91010;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+        }
+
+        .btn-edit {
+            background: linear-gradient(to right, #ff80b5, #f472b6);
+            border-radius: 8px;
+            height: 24px;
+            width: 40px;
+        }
+
+        .btn-delete {
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            border-radius: 8px;
+            height: 24px;
+            width: 40px;
+        }
+
+        input, select {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 15px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            border-color: #a855f7;
+            ring: 2px ring #a855f7;
+        }
+                .btn {
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
