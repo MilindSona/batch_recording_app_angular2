@@ -8,11 +8,11 @@ import { IAPIRepsone } from '../../Models/interfaces/common.Model';
 
 @Component({
   selector: 'app-batch-master',
-  imports: [FormsModule,NgClass,DatePipe],
+  imports: [FormsModule, NgClass, DatePipe],
   templateUrl: './batch-master.html',
   styleUrl: './batch-master.css',
 })
-export class BatchMaster  implements OnInit, OnDestroy{
+export class BatchMaster implements OnInit, OnDestroy {
 
   newBatchObj: BatchModel = new BatchModel();
   batchSrv = inject(BatchService);
@@ -24,17 +24,17 @@ export class BatchMaster  implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.loadBatches();
-    this.batchSrv.roleSub.subscribe((res)=>{
+    this.batchSrv.roleSub.subscribe((res) => {
       debugger;
     })
-    this.batchSrv.roleBehvaiourSub.subscribe((res)=>{
+    this.batchSrv.roleBehvaiourSub.subscribe((res) => {
       debugger;
     })
   }
 
   loadBatches() {
     this.subscription = this.batchSrv.getAllBatches().subscribe({
-      next:(result:IAPIRepsone)=>{
+      next: (result: IAPIRepsone) => {
         this.batchList.set(result.data);
       }
     })
@@ -56,6 +56,21 @@ export class BatchMaster  implements OnInit, OnDestroy{
         alert("Api Error " + error.error.message)
       }
     })
+  }
+
+  onDelete(batchId: number) {
+    this.batchSrv.deleteBatch(batchId).subscribe({
+      next: (res) => {
+        if (res.result) {
+          alert('Batch deleted successfully');
+          this.loadBatches() // refresh list
+        }
+      },
+      error: (err) => console.error(err)
+    });
+  }
+  onResetForm() {
+    this.newBatchObj = new BatchModel();
   }
 
   ngOnDestroy(): void {

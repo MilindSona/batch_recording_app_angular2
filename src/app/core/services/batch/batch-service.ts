@@ -10,20 +10,25 @@ import { ApiMethodConstant } from '../../../constants/global.constant';
   providedIn: 'root',
 })
 export class BatchService {
-  
 
-  http =  inject(HttpClient);
+
+  http = inject(HttpClient);
 
   roleSub = new Subject<string>();
 
   roleBehvaiourSub = new BehaviorSubject<string>("");
 
-  createNewBatch(obj: BatchModel) : Observable<IAPIRepsone> {
-     debugger;
-    return this.http.post<IAPIRepsone>(environment.API_URL + ApiMethodConstant.BATCH,obj)
+  createNewBatch(obj: BatchModel): Observable<IAPIRepsone> {
+    debugger;
+    return this.http.post<IAPIRepsone>(environment.API_URL + ApiMethodConstant.BATCH, obj)
   }
 
   getAllBatches(): Observable<IAPIRepsone> {
     return this.http.get<IAPIRepsone>(environment.API_URL + ApiMethodConstant.BATCH);
+  }
+  deleteBatch(batchId: number): Observable<IAPIRepsone> {
+    return this.http.delete<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.BATCH}/${batchId}`
+    );
   }
 }
