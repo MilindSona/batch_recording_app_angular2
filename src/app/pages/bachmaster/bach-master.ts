@@ -17,7 +17,7 @@ export class BatchMaster implements OnInit, OnDestroy {
   newBatchObj: BatchModel = new BatchModel();
   batchSrv = inject(BatchService);
   batchList = signal<BatchModel[]>([]);
-
+  isEditMode = false;
   subscription: Subscription = new Subscription();
 
 
@@ -41,23 +41,32 @@ export class BatchMaster implements OnInit, OnDestroy {
   }
 
   onSaveBatch() {
-    debugger;
-    this.batchSrv.createNewBatch(this.newBatchObj).subscribe({
-      next: (result: IAPIRepsone) => {
-        debugger;
-        if (result.result) {
-          alert("Batch Created Succefully");
-          this.loadBatches()
-        } else {
-          alert(result.message)
+  if (this.isEditMode) {
+    this.batchSrv
+      .updateBatch(this.newBatchObj.batchId, this.newBatchObj)
+      .subscribe(res => {
+        if (res.result) {
+          alert('Batch updated successfully');
+          this.onResetForm();
+          this.loadBatches();
         }
-      },
-      error: (error) => {
-        alert("Api Error " + error.error.message)
+      });
+  } else {
+    this.batchSrv.createNewBatch(this.newBatchObj).subscribe(res => {
+      if (res.result) {
+        alert('Batch created successfully');
+        this.onResetForm();
+        this.loadBatches();
       }
-    })
+    });
   }
+}
 
+
+  onEdit(batch: BatchModel) {
+    this.newBatchObj = { ...batch };
+    this.isEditMode = true;
+  }
   onDelete(batchId: number) {
     this.batchSrv.deleteBatch(batchId).subscribe({
       next: (res) => {
@@ -71,6 +80,7 @@ export class BatchMaster implements OnInit, OnDestroy {
   }
   onResetForm() {
     this.newBatchObj = new BatchModel();
+    this.isEditMode = false;
   }
 
   ngOnDestroy(): void {

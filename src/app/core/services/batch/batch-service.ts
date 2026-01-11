@@ -31,4 +31,10 @@ export class BatchService {
       `${environment.API_URL}${ApiMethodConstant.BATCH}/${batchId}`
     );
   }
+  updateBatch(batchId: number, obj: BatchModel): Observable<IAPIRepsone> {
+    return this.http.put<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.BATCH}/${batchId}`,
+      obj
+    );
+  }
 }

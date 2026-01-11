@@ -5,7 +5,11 @@
                 <div class="card-body p-4">
                     <div class="section-header">
                         <i class="fas fa-plus-circle"></i>
-                        <h4>Add New Batch</h4>
+                        <h4>
+                            <i class="fas" [ngClass]="isEditMode ? 'fa-edit' : 'fa-plus-circle'"></i>
+                            {{ isEditMode ? 'Update Batch' : 'Add New Batch' }}
+                        </h4>
+
                     </div>
 
                     <form>
@@ -54,12 +58,18 @@
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="button" (click)="onSaveBatch()" class="btn btn-custom btn-success-custom">
-                                <i class="fas fa-save me-2"></i>Create Batch
+                            <button type="button" (click)="onSaveBatch()" class="btn btn-custom"
+                                [ngClass]="isEditMode ? 'btn-warning-custom' : 'btn-success-custom'">
+                                <i class="fas" [ngClass]="isEditMode ? 'fa-edit' : 'fa-save'"></i>
+                                {{ isEditMode ? 'Update Batch' : 'Create Batch' }}
                             </button>
+
+
                             <button (click)="onResetForm()" type="button" class="btn btn-custom btn-secondary-custom">
-                                <i class="fas fa-redo me-2"></i>Reset Form
+                                <i class="fas fa-redo me-2"></i>
+                                {{ isEditMode ? 'Cancel Edit' : 'Reset Form' }}
                             </button>
+
                         </div>
                     </form>
                 </div>
@@ -93,10 +103,11 @@
                                     <td>{{item.batchName}} </td>
                                     <td>{{item.startDate |date:'dd-MM-yy'}} </td>
                                     <td>{{item.endDate |date:'dd-MM-yy'}} </td>
-                                    <td><span class="badge-status " [ngClass]="item.isActive ?'badge-active':'badge-inactive'"><i
+                                    <td><span class="badge-status "
+                                            [ngClass]="item.isActive ?'badge-active':'badge-inactive'"><i
                                                 class="fas fa-check-circle me-1"></i>Active</span></td>
                                     <td>
-                                        <button class="action-btn btn-warning-custom">
+                                        <button (click)="onEdit(item)" class="action-btn btn-warning-custom">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button (click)="onDelete(item.batchId)" class="action-btn btn-danger-custom">
