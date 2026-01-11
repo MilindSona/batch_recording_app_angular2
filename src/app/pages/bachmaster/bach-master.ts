@@ -72,7 +72,7 @@ export class BatchMaster implements OnInit, OnDestroy {
       next: (res) => {
         if (res.result) {
           alert('Batch deleted successfully');
-          this.loadBatches() // refresh list
+          this.loadBatches();
         }
       },
       error: (err) => console.error(err)

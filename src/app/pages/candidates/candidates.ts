@@ -1,21 +1,24 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CandidateService } from '../../core/services/candidate/candidate-service';
 import { NgFor } from '@angular/common';
+import { CandidateService } from '../../core/services/candidate/candidate-service';
 import { CandidateModel } from '../../Models/class/candidate.Model';
 import { IAPIRepsone } from '../../Models/interfaces/common.Model';
 
 @Component({
   selector: 'app-candidates',
-  imports: [ReactiveFormsModule,NgFor],
+  standalone: true,
+  imports: [ReactiveFormsModule, NgFor],
   templateUrl: './candidates.html',
   styleUrl: './candidates.css',
 })
 export class Candidates implements OnInit {
-
-  candidateForm: FormGroup = new FormGroup({});
+  candidateForm!: FormGroup;
   candidateSer = inject(CandidateService);
-  candidateList = signal<CandidateModel []>([]);
+
+  candidateList = signal<CandidateModel[]>([]);
+
+  isEditMode = false;
 
   constructor() {
     this.initializeForm();
@@ -25,15 +28,18 @@ export class Candidates implements OnInit {
     this.getCandidates();
   }
 
-  getCandidates() {
+  getCandidates(): void {
     this.candidateSer.getAllCandidates().subscribe({
-      next:(res:IAPIRepsone)=>{
-        this.candidateList.set(res.data);
-      }
-    })
+      next: (res: IAPIRepsone) => {
+        if (res.result) {
+          this.candidateList.set(res.data);
+        }
+      },
+      error: err => console.error(err)
+    });
   }
 
-  initializeForm() {
+  initializeForm(): void {
     this.candidateForm = new FormGroup({
       candidateId: new FormControl(0),
       fullName: new FormControl(''),
@@ -43,28 +49,71 @@ export class Candidates implements OnInit {
       role: new FormControl(''),
       isActive: new FormControl(false),
       createdAt: new FormControl(new Date()),
-      updatedAt: new FormControl(new Date()),
-    })
+      updatedAt: new FormControl(new Date())
+    });
   }
 
-  onEdit(form: CandidateModel) {
-    this.candidateForm.setValue(form)
+  onEdit(candidate: CandidateModel): void {
+    this.candidateForm.patchValue(candidate);
+    this.isEditMode = true;
   }
 
-  onSaveCandidate() {
-    debugger;
-    const formValue =  this.candidateForm.value;
-    this.candidateSer.createNewCandidate(formValue).subscribe({
-      next:(res:IAPIRepsone)=>{
-        if(res.result) {
-          alert("Candidate Created Succes");
+  onSaveCandidate(): void {
+    const payload: CandidateModel = this.candidateForm.value;
+
+    if (this.isEditMode) {
+      this.candidateSer
+        .updateCandidate(payload.candidateId, payload)
+        .subscribe({
+          next: (res) => {
+            if (res.result) {
+              alert('Candidate updated successfully');
+              this.resetForm();
+              this.getCandidates();
+            }
+          },
+          error: err => console.error(err)
+        });
+    } else {
+      this.candidateSer.createNewCandidate(payload).subscribe({
+        next: (res) => {
+          if (res.result) {
+            alert('Candidate created successfully');
+            this.resetForm();
+            this.getCandidates();
+          }
+        },
+        error: err => console.error(err)
+      });
+    }
+  }
+
+
+  onDelete(candidateId: number): void {
+    this.candidateSer.deleteCandidate(candidateId).subscribe({
+      next: (res) => {
+        if (res.result) {
+          alert('Candidate deleted successfully');
           this.getCandidates();
-         // this.initializeForm();
-          this.candidateForm.reset()
-        } else {
-          alert(res.message)
         }
-      }
-    })
+      },
+      error: err => console.error(err)
+    });
+  }
+
+  resetForm(): void {
+    this.candidateForm.reset({
+      candidateId: 0,
+      fullName: '',
+      email: '',
+      mobileNumber: '',
+      password: '',
+      role: '',
+      isActive: false,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    this.isEditMode = false;
   }
 }

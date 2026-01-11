@@ -15,12 +15,22 @@ export class CandidateService {
 
 
   createNewCandidate(obj: CandidateModel) : Observable<IAPIRepsone> {
-     debugger;
     return this.http.post<IAPIRepsone>(environment.API_URL + ApiMethodConstant.CANDIDATES,obj)
   }
 
   getAllCandidates(): Observable<IAPIRepsone> {
     return this.http.get<IAPIRepsone>(environment.API_URL + ApiMethodConstant.CANDIDATES);
+  }
+ deleteCandidate(candidateId: number): Observable<IAPIRepsone> {
+    return this.http.delete<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.CANDIDATES}/${candidateId}`
+    );
+  }
+  updateCandidate(candidateId: number, obj: CandidateModel): Observable<IAPIRepsone> {
+    return this.http.put<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.CANDIDATES}/${candidateId}`,
+      obj
+    );
   }
 }
 
