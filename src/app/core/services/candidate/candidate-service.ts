@@ -1,22 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CandidateModel } from '../../../Models/class/candidate.Model';
-import { environment } from '../../../../environments/environment';
-import { ApiMethodsConstant } from '../../../constants/global.constant';
 import { Observable } from 'rxjs';
-import { IAPIResponse } from '../../../Models/interfaces/common.Model';
+import { environment } from '../../../../environments/environment';
+import { IAPIRepsone } from '../../../Models/interfaces/common.Model';
+import { CandidateModel } from '../../../Models/class/candidate.Model';
+import { ApiMethodConstant } from '../../../constants/global.constant';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CandidateService {
-   http=inject(HttpClient)
+  
+  http =  inject(HttpClient); 
 
-  createNewCandidate(obj:CandidateModel):Observable<IAPIResponse>{
-    return this.http.post<IAPIResponse>(environment.API_URL + ApiMethodsConstant.CANDIDATES, obj);
+
+  createNewCandidate(obj: CandidateModel) : Observable<IAPIRepsone> {
+     debugger;
+    return this.http.post<IAPIRepsone>(environment.API_URL + ApiMethodConstant.CANDIDATES,obj)
   }
-  getAllCandidates():Observable<IAPIResponse>{
-    return this.http.get<IAPIResponse>(environment.API_URL+ ApiMethodsConstant.CANDIDATES)
+
+  getAllCandidates(): Observable<IAPIRepsone> {
+    return this.http.get<IAPIRepsone>(environment.API_URL + ApiMethodConstant.CANDIDATES);
   }
 }
 

@@ -1,5 +1,5 @@
-export interface IAPIResponse{   
-  result: boolean
-  message: string,
-  data: any
+export interface IAPIRepsone  {
+   result: boolean,
+   message: string,
+   data: any
 }

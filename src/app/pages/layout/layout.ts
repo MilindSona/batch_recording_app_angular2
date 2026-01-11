@@ -1,26 +1,36 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { GLOBAL_CONSTANT } from '../../constants/global.constant';
+import { Router, RouterOutlet, RouterLinkWithHref, RouterLink } from '@angular/router';
+import { BatchService } from '../../core/services/batch/batch-service';
+import { GlobalConstant } from '../../constants/global.constant';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet,RouterLink],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })
 export class Layout {
-currentUserData:any;
-router=inject(Router);
 
-constructor(){
-  const localData=localStorage.getItem(GLOBAL_CONSTANT.LOCAL_KEY_LOGIN)
-  if(localData!=null){
-    this.currentUserData=JSON.parse(localData);
+  loggedUserData: any;
+  router = inject(Router)
+  batchSr  = inject(BatchService)
+
+  constructor() {
+    const localData =  localStorage.getItem(GlobalConstant.LOCAL_KEY_LOGIN);
+    if(localData != null) {
+      this.loggedUserData =  JSON.parse(localData);
+    }
   }
-}
 
-logout(){
-  localStorage.removeItem(GLOBAL_CONSTANT.LOCAL_KEY_LOGIN);
-  this.router.navigate(['login']); // navigate expects array 
-}
+  onLogOff() {
+    localStorage.removeItem(GlobalConstant.LOCAL_KEY_LOGIN);
+    this.router.navigate(['login'])
+
+  }
+
+  // onRoleChnages(event:any) {
+  //   debugger;
+  //   this.batchSr.roleSub.next(event.target.value);
+  //   this.batchSr.roleBehvaiourSub.next(event.target.value);
+  // }
 }

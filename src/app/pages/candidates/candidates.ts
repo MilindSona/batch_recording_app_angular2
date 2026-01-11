@@ -1,32 +1,38 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CandidateService } from '../../core/services/candidate/candidate-service';
-import { IAPIResponse } from '../../Models/interfaces/common.Model';
+import { NgFor } from '@angular/common';
 import { CandidateModel } from '../../Models/class/candidate.Model';
-import { Subscription } from 'rxjs';
-import { NgClass } from '@angular/common';
+import { IAPIRepsone } from '../../Models/interfaces/common.Model';
 
 @Component({
   selector: 'app-candidates',
-  imports: [ReactiveFormsModule,NgClass],
+  imports: [ReactiveFormsModule,NgFor],
   templateUrl: './candidates.html',
   styleUrl: './candidates.css',
 })
 export class Candidates implements OnInit {
-  candidateForm: FormGroup = new FormGroup({});
-  CandidateList = signal<CandidateModel[]>([])
-  candidateServ = inject(CandidateService)
 
-  subscription:Subscription=new Subscription();
+  candidateForm: FormGroup = new FormGroup({});
+  candidateSer = inject(CandidateService);
+  candidateList = signal<CandidateModel []>([]);
 
   constructor() {
     this.initializeForm();
   }
 
   ngOnInit(): void {
-    this.getCandidates()
+    this.getCandidates();
   }
-  
+
+  getCandidates() {
+    this.candidateSer.getAllCandidates().subscribe({
+      next:(res:IAPIRepsone)=>{
+        this.candidateList.set(res.data);
+      }
+    })
+  }
+
   initializeForm() {
     this.candidateForm = new FormGroup({
       candidateId: new FormControl(0),
@@ -41,40 +47,24 @@ export class Candidates implements OnInit {
     })
   }
 
-  getCandidates() {
-   this.subscription= this.candidateServ.getAllCandidates().subscribe({
-      next: (res: IAPIResponse) => {
-        this.CandidateList.set(res.data)
-      }
-    })
+  onEdit(form: CandidateModel) {
+    this.candidateForm.setValue(form)
   }
 
   onSaveCandidate() {
     debugger;
-    const formValue = this.candidateForm.value;
-    console.log(formValue)
-    this.candidateServ.createNewCandidate(formValue).subscribe({
-      next: (res: IAPIResponse) => {
-        if (res.result) {
-          alert("candidate created success");
+    const formValue =  this.candidateForm.value;
+    this.candidateSer.createNewCandidate(formValue).subscribe({
+      next:(res:IAPIRepsone)=>{
+        if(res.result) {
+          alert("Candidate Created Succes");
           this.getCandidates();
-          //this.initializeForm();
-          this.candidateForm.reset();
-        }
-        else {
+         // this.initializeForm();
+          this.candidateForm.reset()
+        } else {
           alert(res.message)
         }
-      },
-      error: err => {
-        console.error('Backend error:', err.error?.message);
       }
     })
   }
-
-  onEdit(form:CandidateModel){
-this.candidateForm.setValue(form)
-  }
-   ngOnDestroy(): void {
-   this.subscription.unsubscribe();
- }
 }
