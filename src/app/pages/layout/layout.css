@@ -1,0 +1,196 @@
+/* =========================================
+   LAYOUT WRAPPER
+========================================= */
+.app-container {
+  display: flex;
+  height: calc(100vh - 56px);
+  position: relative;
+}
+
+/* =========================================
+   TOP NAVBAR
+========================================= */
+.navbar {
+  height: 56px;
+  background: linear-gradient(90deg, #064e3b, #022c22);
+  padding: 0 16px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+}
+
+.navbar-brand {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ecfeff !important;
+}
+
+.navbar-brand:hover {
+  color: #ffffff !important;
+}
+
+/* Toggle button */
+.navbar .btn-outline-light {
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #d1fae5;
+  border-radius: 10px;
+  padding: 6px 10px;
+  transition: all 0.2s ease;
+}
+
+.navbar .btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* User email pill */
+.user-email {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ecfeff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+/* Logoff button */
+.navbar .btn-primary {
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.navbar .btn-primary:hover {
+  background: linear-gradient(135deg, #059669, #0d9488);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+.sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, #064e3b, #022c22);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: width 0.25s ease, transform 0.25s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.sidebar.collapsed {
+  width: 72px;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #d1fae5;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.sidebar i {
+  font-size: 18px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.sidebar .label {
+  transition: opacity 0.2s ease;
+}
+
+.sidebar.collapsed .label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.sidebar a.active {
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  position: relative;
+
+  /* Match animated dashboard gradient */
+  background: linear-gradient(
+    -45deg,
+    #0ea5e9,
+    #06b6d4,
+    #10b981,
+    #14b8a6
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.02);
+  pointer-events: none;
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  .content {
+    padding: 16px;
+  }
+}
+
+.sidebar a.active {
+  position: relative;
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45);
+}
+
+.sidebar a.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 4px;
+  background: #ecfeff;
+  border-radius: 0 4px 4px 0;
+}
+
+.sidebar a.active i {
+  color: #ffffff;
+  transform: scale(1.2);
+}

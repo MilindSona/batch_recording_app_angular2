@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet, RouterLinkWithHref, RouterLink } from '@angular/router';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { BatchService } from '../../core/services/batch/batch-service';
 import { GlobalConstant } from '../../constants/global.constant';
 
@@ -10,27 +10,23 @@ import { GlobalConstant } from '../../constants/global.constant';
   styleUrl: './layout.css',
 })
 export class Layout {
-
+  isSidebarCollapsed = false;
   loggedUserData: any;
   router = inject(Router)
-  batchSr  = inject(BatchService)
+  batchSr = inject(BatchService)
 
   constructor() {
-    const localData =  localStorage.getItem(GlobalConstant.LOCAL_KEY_LOGIN);
-    if(localData != null) {
-      this.loggedUserData =  JSON.parse(localData);
+    const localData = localStorage.getItem(GlobalConstant.LOCAL_KEY_LOGIN);
+    if (localData != null) {
+      this.loggedUserData = JSON.parse(localData);
     }
   }
 
   onLogOff() {
     localStorage.removeItem(GlobalConstant.LOCAL_KEY_LOGIN);
     this.router.navigate(['login'])
-
   }
-
-  // onRoleChnages(event:any) {
-  //   debugger;
-  //   this.batchSr.roleSub.next(event.target.value);
-  //   this.batchSr.roleBehvaiourSub.next(event.target.value);
-  // }
+  toggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+  }
 }

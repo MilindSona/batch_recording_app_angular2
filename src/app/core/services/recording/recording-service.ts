@@ -16,11 +16,23 @@ export class RecordingService {
 
 
   createNewSessionRecording(obj: ISession) : Observable<IAPIRepsone> {
-     debugger;
-    return this.http.post<IAPIRepsone>(environment.API_URL + ApiMethodConstant.BATCH,obj)
+    return this.http.post<IAPIRepsone>(environment.API_URL + ApiMethodConstant.POST_SESSIONS,obj)
   }
 
   getAllSessionRecording(): Observable<IAPIRepsone> {
-    return this.http.get<IAPIRepsone>(environment.API_URL + ApiMethodConstant.BATCH);
+    return this.http.get<IAPIRepsone>(environment.API_URL + ApiMethodConstant.SESSIONS);
+  }
+
+  deleteSessionRecording(sessionId: number): Observable<IAPIRepsone> {
+    return this.http.delete<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.POST_SESSIONS}/${sessionId}`
+    );
+  }
+
+  updateSessionRecording(sessionId: number, obj: ISession): Observable<IAPIRepsone> {
+    return this.http.put<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.POST_SESSIONS}/${sessionId}`,
+      obj
+    );
   }
 }

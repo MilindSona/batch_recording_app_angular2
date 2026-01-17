@@ -1,48 +1,58 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-
-    <a class="navbar-brand" routerLink="/">MyApp</a>
-
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"
-        >
-          Dashboard
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/batch" routerLinkActive="active">
-          Batches
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/candidate" routerLinkActive="active">
-          Candidate
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/enrollment" routerLinkActive="active">
-          Enrollment
-        </a>
-      </li>
-         <li class="nav-item">
-        <a class="nav-link" routerLink="/session-recordings" routerLinkActive="active">
-          Recordings
-        </a>
-      </li>
-    </ul>
-
-    <button class="btn btn-outline-light me-2">
-      {{ loggedUserData?.email }}
+<!-- TOP NAVBAR -->
+<nav class="navbar navbar-dark bg-dark px-3">
+  <div class="d-flex align-items-center gap-3">
+    <!-- TOGGLE BUTTON -->
+    <button class="btn btn-outline-light btn-sm" (click)="toggleSidebar()">
+      <i class="ri-menu-line"></i>
     </button>
-    <button class="btn btn-primary" type="button" (click)="onLogOff()">
+
+    <a class="navbar-brand fw-semibold" routerLink="/">MyApp</a>
+  </div>
+
+  <div class="d-flex align-items-center gap-2">
+    <span class="user-email">{{ loggedUserData?.email }}</span>
+    <button class="btn btn-sm btn-primary" (click)="onLogOff()">
       Logoff
     </button>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<!-- APP BODY -->
+<div class="app-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed" >
+
+    <a routerLink="/dashboard" routerLinkActive="active">
+      <i class="ri-dashboard-line"></i>
+      <span class="label">Dashboard</span>
+    </a>
+
+    <a routerLink="/batch" routerLinkActive="active">
+      <i class="ri-stack-line"></i>
+      <span class="label">Batches</span>
+    </a>
+
+    <a routerLink="/candidate" routerLinkActive="active">
+      <i class="ri-user-line"></i>
+      <span class="label">Candidate</span>
+    </a>
+
+    <a routerLink="/enrollment" routerLinkActive="active">
+      <i class="ri-file-list-3-line"></i>
+      <span class="label">Enrollment</span>
+    </a>
+
+    <a routerLink="/session-recordings" routerLinkActive="active">
+      <i class="ri-video-line"></i>
+      <span class="label">Recordings</span>
+    </a>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content" [class.expanded]="isSidebarCollapsed">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

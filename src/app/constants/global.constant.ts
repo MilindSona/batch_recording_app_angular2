@@ -6,8 +6,9 @@ export const GlobalConstant = {
 export const ApiMethodConstant = {
     BATCH: 'Batches',
     ENROLLMENTS: 'BatchEnrollments',
-    SESSIONS:'BatchSessions',
-    CANDIDATES:'Candidates'
+    SESSIONS:'BatchSessions/GetAllSessionsRecordings',
+    CANDIDATES:'Candidates',
+    POST_SESSIONS:'BatchSessions'
 }
 
 
