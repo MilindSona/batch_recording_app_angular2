@@ -37,4 +37,10 @@ export class BatchService {
       obj
     );
   }
+
+    getSessionsRecordingByBatchId(batchId: number): Observable<IAPIRepsone> {
+    return this.http.get<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.POST_SESSIONS}/by-batch/${batchId}`
+    );
+  }
 }

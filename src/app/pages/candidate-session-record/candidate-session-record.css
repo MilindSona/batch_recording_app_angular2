@@ -1,0 +1,102 @@
+/* Page Background */
+.page-wrapper {
+  min-height: 100vh;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Title */
+.page-title {
+  color: #ffffff;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+/* Card Layout */
+.batch-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Batch Card */
+.batch-card {
+  width: 360px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.batch-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Header */
+.batch-header {
+  background: #12a9e0;
+  color: #ffffff;
+  padding: 25px;
+}
+
+.batch-header h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.batch-code {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Body */
+.batch-body {
+  padding: 25px;
+}
+
+.batch-body p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 20px;
+  color: #12a9e0;
+}
+
+.stat span {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Button */
+.btn-view {
+  width: 100%;
+  border: none;
+  padding: 12px;
+  border-radius: 25px;
+  background: #12a9e0;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-view:hover {
+  background: #0e8fc2;
+}

@@ -12,7 +12,7 @@ import { IBatchEnrollment } from '../../Models/interfaces/BatchEnrollment.Model'
 
 @Component({
   selector: 'app-enrollment',
-  imports: [ReactiveFormsModule, AsyncPipe, DatePipe],
+  imports: [ReactiveFormsModule, AsyncPipe],
   templateUrl: './enrollment.html',
   styleUrl: './enrollment.css',
 })
@@ -58,11 +58,6 @@ export class Enrollment implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllBatches();
-    
-  forkJoin([this.mhCityArray, this.mpCityArray]).subscribe((result: any) => {
-    console.log(result[0])
-    console.log(result[1])
-  })
   }
 
   initiaizeForm() {
@@ -94,13 +89,26 @@ export class Enrollment implements OnInit, OnDestroy {
 
   onSaveEnrollment() {
     const formValue = this.enrollmentForm.value;
-    debugger;
+    console.log(formValue);
+    const id = Number(formValue.enrollmentId);
+    const save$ = id && id > 0
+      ? this.enrollentService.updateEnrollment(id, formValue)
+      : this.enrollentService.createNewEnrollment(formValue);
+
+    save$.subscribe({
+      next: (res: IAPIRepsone) => {
+        alert(res.message);
+        this.getAllEnrollments();
+      },
+      error: (err) => {
+        console.error('Enrollment save failed', err);
+        alert(err?.error?.message || 'Failed to save enrollment');
+      }
+    })
   }
 
   ngOnDestroy(): void {
     this.subscriptipon.unsubscribe();
   }
-  mhCityArray = of(['Pune', 'Nagpur', 'Mumbai', 'Thane'])
-  mpCityArray = of(['Bhopal', 'Indore'])
 
 }

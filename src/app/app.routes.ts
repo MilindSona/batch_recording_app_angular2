@@ -7,6 +7,8 @@ import { Candidates } from './pages/candidates/candidates';
 import { Enrollment } from './pages/enrollment/enrollment';
 import { SessionRecordings } from './pages/session-recordings/session-recordings';
 import { BatchMaster } from './pages/bachmaster/bach-master';
+import { CandidateDashboard } from './pages/candidate-dashboard/candidate-dashboard';
+import { CandidateSessionRecord } from './pages/candidate-session-record/candidate-session-record';
 
 export const routes: Routes = [
     {
@@ -39,10 +41,19 @@ export const routes: Routes = [
                 component: SessionRecordings
             },
             {
+                path:'candidate-dashboard',
+                component: CandidateDashboard
+            },
+            {
+                path:'candidate-recordings',
+                component: CandidateSessionRecord
+            },
+            {
                 path:'dashboard',
                 component: Dashboard,
                 canActivate: [authGuard]
-            }
+            },
+
         ]
     }
 

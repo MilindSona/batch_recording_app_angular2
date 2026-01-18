@@ -1,7 +1,6 @@
-<!-- TOP NAVBAR -->
+
 <nav class="navbar navbar-dark bg-dark px-3">
   <div class="d-flex align-items-center gap-3">
-    <!-- TOGGLE BUTTON -->
     <button class="btn btn-outline-light btn-sm" (click)="toggleSidebar()">
       <i class="ri-menu-line"></i>
     </button>
@@ -17,12 +16,10 @@
   </div>
 </nav>
 
-<!-- APP BODY -->
 <div class="app-container">
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed" >
-
+    @if(loggedUserData?.role === roleEnum.SUPER_ADMIN_ROLE){
     <a routerLink="/dashboard" routerLinkActive="active">
       <i class="ri-dashboard-line"></i>
       <span class="label">Dashboard</span>
@@ -47,9 +44,20 @@
       <i class="ri-video-line"></i>
       <span class="label">Recordings</span>
     </a>
+    }
 
+    @else{
+    <a routerLink="/candidate-dashboard" routerLinkActive="active">
+      <i class="ri-dashboard-line"></i>
+      <span class="label">Dashboard</span>
+    </a>
+
+    <a routerLink="/candidate-recordings" routerLinkActive="active">
+      <i class="ri-video-line"></i>
+      <span class="label">Recordings</span>
+    </a>
+    }
   </aside>
-
   <!-- MAIN CONTENT -->
   <main class="content" [class.expanded]="isSidebarCollapsed">
     <router-outlet></router-outlet>

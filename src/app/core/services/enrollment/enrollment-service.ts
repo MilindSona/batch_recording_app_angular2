@@ -4,7 +4,7 @@ import { IBatchEnrollment } from '../../../Models/interfaces/BatchEnrollment.Mod
 import { IAPIRepsone } from '../../../Models/interfaces/common.Model';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../environments/environment.development';
-import { ApiMethodConstant } from '../../../constants/global.constant';
+import { ApiMethodConstant, MethodNames } from '../../../constants/global.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +30,11 @@ export class EnrollentService {
     return this.http.delete<IAPIRepsone>(
       `${environment.API_URL}${ApiMethodConstant.ENROLLMENTS}/${enrollmentId}`
     );
-  } 
+  }
+  
+  getEnrolledBatchesByCandidateId(Id: number): Observable<IAPIRepsone> {
+    return this.http.get<IAPIRepsone>(
+      `${environment.API_URL}${ApiMethodConstant.ENROLLMENTS}/${MethodNames.GET_ENROLLED_BATCHES_BY_CANDIDATE_ID}/${Id}`
+    );
+  }
 }

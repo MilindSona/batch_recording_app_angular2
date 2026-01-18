@@ -1,0 +1,35 @@
+<div class="page-wrapper">
+  <h1 class="page-title">
+    My Enrolled Batches
+  </h1>
+  @for(item of enrollments(); track $index) {
+  <button class="btn btn-success" (click)="getSessionsRecording(item.batchId)">{{item.batchId}}</button>
+  }
+  <div class="batch-container">
+    @if(selectedBatchId() && sessionRecording().length === 0) {
+    <div class="empty-state">
+      No session recordings available for this batch.
+    </div>
+    }
+    @for(batch of sessionRecording(); track $index) {
+    <div class="batch-card">
+      <div class="batch-header">
+        <h3>{{batch.topicName}}</h3>
+        <span class="batch-code">{{batch.sessionDate | date:'mediumDate'}}</span>
+      </div>
+
+      <div class="batch-body">
+        <p>
+          {{batch.topicDescription}}
+        </p>
+
+        <a href="https://www.youtube.com/watch?v={{batch.youtubeVideoId}}" target="_blank" class="youtube-link">
+          <i class="fab fa-youtube"></i>
+          Watch Video
+        </a>
+      </div>
+    </div>
+    }
+
+  </div>
+</div>

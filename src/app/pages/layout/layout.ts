@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { BatchService } from '../../core/services/batch/batch-service';
 import { GlobalConstant } from '../../constants/global.constant';
+import { Roles } from '../../core/enums/role.enum';
 
 @Component({
   selector: 'app-layout',
@@ -15,6 +16,8 @@ export class Layout {
   router = inject(Router)
   batchSr = inject(BatchService)
 
+  roleEnum=Roles;
+  
   constructor() {
     const localData = localStorage.getItem(GlobalConstant.LOCAL_KEY_LOGIN);
     if (localData != null) {

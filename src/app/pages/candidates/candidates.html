@@ -44,7 +44,7 @@
                                 </label>
                                 <select class="form-select" formControlName="role" id="role">
                                     <option value="">Select role</option>
-                                    <option value="SuperAdmin">Super Admin</option> 
+                                    <option value="SuperAdmin">SuperAdmin</option> 
                                     <option value="Candidate">Candidate</option>
                                 </select>
                             </div>
@@ -105,7 +105,7 @@
                                         <td>{{candidate.fullName}}</td>
                                          <td>{{candidate.email}}</td>
                                         <td><span class="role-badge role-admin">{{candidate.role}}</span></td>
-                                        <td><span [class]="candidate.isActive? 'badge-status badge-active':'badge-status badge-inactive'"><i class="fas fa-check-circle me-1"></i>{{candidate.isActive}}</span></td>
+                                        <td><span [class]="candidate.isActive? 'badge-status badge-active':'badge-status badge-inactive'"><i class="fas fa-check-circle me-1"></i>{{candidate.isActive?"Active":"In-active"}}</span></td>
                                         <td>
                                             <button (click)="onEdit(candidate)" class="action-btn btn-success-custom">
                                                 <i class="fas fa-edit"></i>

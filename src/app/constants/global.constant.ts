@@ -12,6 +12,10 @@ export const ApiMethodConstant = {
 }
 
 
+export const MethodNames = {
+   GET_ENROLLED_BATCHES_BY_CANDIDATE_ID: 'by-candidate'
+}
+
 
 
  
