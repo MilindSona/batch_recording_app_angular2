@@ -85,41 +85,43 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead>
+                        <p-contextMenu #cm [model]="contextItems" [appendTo]="'body'" [autoZIndex]="true" [baseZIndex]="1100"></p-contextMenu>
+                        <p-table [value]="batchList()" [tableStyle]="{'min-width':'40rem'}" [responsiveLayout]="'scroll'"
+                                 [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [showFirstLastIcon]="true"
+                                 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first}–{last} of {totalRecords}"
+                                 [contextMenu]="cm" [contextMenuSelection]="selectedBatch" (onContextMenuSelect)="onContextMenuSelect($event)">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:3rem">
+                                    <col style="width:30%">
+                                    <col style="width:18%">
+                                    <col style="width:18%">
+                                    <col style="width:20%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @for (item of batchList(); track $index) {
-                                <tr>
-                                    <td><strong>{{$index+1}}</strong></td>
-                                    <td>{{item.batchName}} </td>
-                                    <td>{{item.startDate |date:'dd-MM-yy'}} </td>
-                                    <td>{{item.endDate |date:'dd-MM-yy'}} </td>
-                                    <td><span class="badge-status "
-                                            [ngClass]="item.isActive ?'badge-active':'badge-inactive'"><i
-                                                class="fas fa-check-circle me-1"></i>Active</span></td>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                                <tr [pContextMenuRow]="item">
+                                    <td><strong>{{rowIndex + 1}}</strong></td>
+                                    <td>{{item.batchName}}</td>
+                                    <td>{{item.startDate | date:'dd-MM-yy'}}</td>
+                                    <td>{{item.endDate | date:'dd-MM-yy'}}</td>
                                     <td>
-                                        <button (click)="onEdit(item)" class="action-btn btn-warning-custom">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button (click)="onDelete(item.batchId)" class="action-btn btn-danger-custom">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        <span class="badge-status" [ngClass]="item.isActive ? 'badge-active' : 'badge-inactive'">
+                                            <i class="fas fa-check-circle me-1"></i>{{item.isActive ? 'Active' : 'In-active'}}
+                                        </span>
                                     </td>
                                 </tr>
-
-                                }
-
-                            </tbody>
-                        </table>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </div>
             </div>

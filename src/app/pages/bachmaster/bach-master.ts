@@ -2,13 +2,16 @@ import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BatchService } from '../../core/services/batch/batch-service';
 import { DatePipe, NgClass } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { BatchModel } from '../../Models/class/Batch.Model';
 import { IAPIRepsone } from '../../Models/interfaces/common.Model';
 
 @Component({
   selector: 'app-batch-master',
-  imports: [FormsModule, NgClass, DatePipe],
+  imports: [FormsModule, NgClass, DatePipe, TableModule, ContextMenuModule],
   templateUrl: './batch-master.html',
   styleUrl: './batch-master.css',
 })
@@ -19,6 +22,8 @@ export class BatchMaster implements OnInit, OnDestroy {
   batchList = signal<BatchModel[]>([]);
   isEditMode = false;
   subscription: Subscription = new Subscription();
+  contextItems: MenuItem[] = [];
+  selectedBatch: BatchModel | null = null;
 
 
 
@@ -30,6 +35,26 @@ export class BatchMaster implements OnInit, OnDestroy {
     this.batchSrv.roleBehvaiourSub.subscribe((res) => {
       debugger;
     })
+    this.contextItems = [
+      {
+        label: 'Edit',
+        icon: 'fas fa-edit',
+        command: () => {
+          if (this.selectedBatch) {
+            this.onEdit(this.selectedBatch);
+          }
+        }
+      },
+      {
+        label: 'Delete',
+        icon: 'fas fa-trash',
+        command: () => {
+          if (this.selectedBatch) {
+            this.onDelete(this.selectedBatch.batchId);
+          }
+        }
+      }
+    ];
   }
 
   loadBatches() {
@@ -85,6 +110,10 @@ export class BatchMaster implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+  }
+
+  onContextMenuSelect(event: any) {
+    this.selectedBatch = event?.data ?? null;
   }
 
 }

@@ -1,0 +1,6 @@
+/* Ensure status badge text does not break to new line */
+.badge-status {
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+}
