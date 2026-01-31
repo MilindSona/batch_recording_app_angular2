@@ -3,15 +3,20 @@ import { FormsModule } from '@angular/forms';
 import { BatchService } from '../../core/services/batch/batch-service';
 import { DatePipe, NgClass } from '@angular/common';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { BatchModel } from '../../Models/class/Batch.Model';
 import { IAPIRepsone } from '../../Models/interfaces/common.Model';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-batch-master',
-  imports: [FormsModule, NgClass, DatePipe, TableModule, ContextMenuModule],
+  imports: [FormsModule, NgClass, DatePipe, TableModule, ContextMenuModule, ToastModule, ConfirmDialogModule],
+  providers: [MessageService,ConfirmationService],
   templateUrl: './batch-master.html',
   styleUrl: './batch-master.css',
 })
@@ -24,6 +29,8 @@ export class BatchMaster implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   contextItems: MenuItem[] = [];
   selectedBatch: BatchModel | null = null;
+  msg = inject(MessageService);
+  confirm = inject(ConfirmationService);
 
 
 
@@ -71,7 +78,7 @@ export class BatchMaster implements OnInit, OnDestroy {
       .updateBatch(this.newBatchObj.batchId, this.newBatchObj)
       .subscribe(res => {
         if (res.result) {
-          alert('Batch updated successfully');
+          this.msg.add({severity:'success', summary:'Success', detail:'Batch updated successfully'});
           this.onResetForm();
           this.loadBatches();
         }
@@ -79,7 +86,7 @@ export class BatchMaster implements OnInit, OnDestroy {
   } else {
     this.batchSrv.createNewBatch(this.newBatchObj).subscribe(res => {
       if (res.result) {
-        alert('Batch created successfully');
+        this.msg.add({severity:'success', summary:'Success', detail:'Batch created successfully'});
         this.onResetForm();
         this.loadBatches();
       }
@@ -93,14 +100,30 @@ export class BatchMaster implements OnInit, OnDestroy {
     this.isEditMode = true;
   }
   onDelete(batchId: number) {
-    this.batchSrv.deleteBatch(batchId).subscribe({
-      next: (res) => {
-        if (res.result) {
-          alert('Batch deleted successfully');
-          this.loadBatches();
-        }
+    this.confirm.confirm({
+      header: 'Confirm Delete',
+      message: 'Are you sure you want to delete this batch?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptButtonStyleClass: 'p-button-danger',
+      acceptLabel: 'Delete',
+      rejectLabel: 'Cancel',
+      accept: () => {
+        this.batchSrv.deleteBatch(batchId).subscribe({
+          next: (res) => {
+            if (res.result) {
+              this.msg.add({severity:'success', summary:'Success', detail:'Batch deleted successfully'});
+              this.loadBatches();
+            }
+          },
+          error: (err) => {
+            console.error(err);
+            this.msg.add({severity:'error', summary:'Error', detail:'Failed to delete batch'});
+          }
+        });
       },
-      error: (err) => console.error(err)
+      reject: () => {
+        this.msg.add({severity:'info', summary:'Cancelled', detail:'Delete action cancelled'});
+      }
     });
   }
   onResetForm() {

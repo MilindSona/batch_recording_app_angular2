@@ -77,7 +77,9 @@
         </div>
 
         <div class="col-lg-8">
+            <p-toast position="top-center"></p-toast>
             <div class="card table-card">
+                <p-confirmDialog></p-confirmDialog>
                 <div class="card-body p-4">
                     <div class="section-header">
                         <i class="fas fa-list"></i>
@@ -85,11 +87,13 @@
                     </div>
 
                     <div class="table-responsive">
-                        <p-contextMenu #cm [model]="contextItems" [appendTo]="'body'" [autoZIndex]="true" [baseZIndex]="1100"></p-contextMenu>
-                        <p-table [value]="batchList()" [tableStyle]="{'min-width':'40rem'}" [responsiveLayout]="'scroll'"
-                                 [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [showFirstLastIcon]="true"
-                                 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first}–{last} of {totalRecords}"
-                                 [contextMenu]="cm" [contextMenuSelection]="selectedBatch" (onContextMenuSelect)="onContextMenuSelect($event)">
+                        <p-contextMenu #cm [model]="contextItems" [appendTo]="'body'" [autoZIndex]="true"
+                            [baseZIndex]="1100"></p-contextMenu>
+                        <p-table [value]="batchList()" [tableStyle]="{'min-width':'40rem'}"
+                            [responsiveLayout]="'scroll'" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]"
+                            [showFirstLastIcon]="true" [showCurrentPageReport]="true"
+                            currentPageReportTemplate="Showing {first}–{last} of {totalRecords}" [contextMenu]="cm"
+                            [contextMenuSelection]="selectedBatch" (onContextMenuSelect)="onContextMenuSelect($event)">
                             <ng-template pTemplate="colgroup">
                                 <colgroup>
                                     <col style="width:3rem">
@@ -115,8 +119,10 @@
                                     <td>{{item.startDate | date:'dd-MM-yy'}}</td>
                                     <td>{{item.endDate | date:'dd-MM-yy'}}</td>
                                     <td>
-                                        <span class="badge-status" [ngClass]="item.isActive ? 'badge-active' : 'badge-inactive'">
-                                            <i class="fas fa-check-circle me-1"></i>{{item.isActive ? 'Active' : 'In-active'}}
+                                        <span class="badge-status"
+                                            [ngClass]="item.isActive ? 'badge-active' : 'badge-inactive'">
+                                            <i class="fas fa-check-circle me-1"></i>{{item.isActive ? 'Active' :
+                                            'In-active'}}
                                         </span>
                                     </td>
                                 </tr>

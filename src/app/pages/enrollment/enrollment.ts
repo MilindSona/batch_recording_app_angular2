@@ -12,7 +12,7 @@ import { IBatchEnrollment } from '../../Models/interfaces/BatchEnrollment.Model'
 
 @Component({
   selector: 'app-enrollment',
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [ReactiveFormsModule, AsyncPipe,DatePipe],
   templateUrl: './enrollment.html',
   styleUrl: './enrollment.css',
 })
@@ -27,30 +27,13 @@ export class Enrollment implements OnInit, OnDestroy {
   enrollentService = inject(EnrollentService);
   batchData = signal<BatchModel[]>([]);
   enrollmentList = signal<IBatchEnrollment[]>([]);
-
+ isLoading = signal<boolean>(false);
   candidateList$: Observable<CandidateModel[]> = new Observable<CandidateModel[]>;
 
   subscriptipon: Subscription = new Subscription();
 
-  currentDate = signal<any>(new Date());
-
-  timerInterval$ = interval(1000);
-
-  //currenTime: Observable<any> = new Observable<any>;
-
-  couter$ = interval(2000);
-
-  //counterValue = signal<number>(0);
-
   constructor() {
     this.initiaizeForm();
-
-    // this.couter$.subscribe(res=>{
-    //   this.counterValue.set(res);
-    // })
-    this.timerInterval$.subscribe(res => {
-      this.currentDate.set(new Date())
-    })
     this.candidateList$ = this.candidateSrv.getAllCandidates().pipe(
       map((res: IAPIRepsone) => res.data)
     );
@@ -80,8 +63,10 @@ export class Enrollment implements OnInit, OnDestroy {
   }
 
   getAllEnrollments() {
+     this.isLoading.set(true);
     this.enrollentService.getAllEnrollments().subscribe({
       next: (res: IAPIRepsone) => {
+        this.isLoading.set(false);
         this.enrollmentList.set(res.data);
       }
     })
@@ -110,5 +95,8 @@ export class Enrollment implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptipon.unsubscribe();
   }
+  onDelete(enrollmentId: number) {
+  }
+
 
 }

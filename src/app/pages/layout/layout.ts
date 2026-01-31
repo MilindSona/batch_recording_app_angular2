@@ -3,6 +3,7 @@ import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { BatchService } from '../../core/services/batch/batch-service';
 import { GlobalConstant } from '../../constants/global.constant';
 import { Roles } from '../../core/enums/role.enum';
+import { UserService } from '../../core/services/user/user-service';
 
 @Component({
   selector: 'app-layout',
@@ -15,16 +16,17 @@ export class Layout {
   loggedUserData: any;
   router = inject(Router)
   batchSr = inject(BatchService)
-
+  userSrv=inject(UserService)
   roleEnum=Roles;
   
   constructor() {
-    const localData = localStorage.getItem(GlobalConstant.LOCAL_KEY_LOGIN);
-    if (localData != null) {
-      this.loggedUserData = JSON.parse(localData);
-    }
   }
 
+  onSearch(event:any) {
+    
+    const searchjText =  event.target.value;
+    this.userSrv.onSearchChange.next(searchjText)
+  }
   onLogOff() {
     localStorage.removeItem(GlobalConstant.LOCAL_KEY_LOGIN);
     this.router.navigate(['login'])
