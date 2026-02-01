@@ -9,7 +9,7 @@ import { ApiMethodConstant } from '../../../constants/global.constant';
   providedIn: 'root',
 })
 export class DashboardAdminService {
-
+  private apiUrl = 'https://feestracking.freeprojectapi.com/api/BatchDashboard/GetBatchWiseRecordingCount';
   http=inject(HttpClient);
 
   getAdminDashboard(): Observable<IAPIRepsone> {
@@ -21,8 +21,9 @@ export class DashboardAdminService {
       `${environment.API_URL}${ApiMethodConstant.POST_SESSIONS}/by-batch/${batchId}`
     );
   }
-  getBatchWiseRecordingCount(userId: number): Observable<IAPIRepsone> {
-    return this.http.get<IAPIRepsone>(environment.API_URL + ApiMethodConstant.GetBatchWiseRecordingCount+`/${userId}`);
+  getBatchRecordingCount(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?userId=${userId}`);
   }
+  
   
 }

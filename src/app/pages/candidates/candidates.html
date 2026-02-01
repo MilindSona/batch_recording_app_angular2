@@ -15,6 +15,9 @@
                                     <i class="fas fa-user me-2"></i>Full Name
                                 </label>
                                 <input type="text" formControlName="fullName" class="form-control" id="fullName" placeholder="Enter full name">
+                                <div *ngIf="candidateForm.get('fullName')?.touched && candidateForm.get('fullName')?.hasError('required')" class="text-danger small mt-1">
+                                    Full Name is required.
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -22,6 +25,12 @@
                                     <i class="fas fa-envelope me-2"></i>Email Address
                                 </label>
                                 <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter email address">
+                                <div *ngIf="candidateForm.get('email')?.touched && candidateForm.get('email')?.hasError('required')" class="text-danger small mt-1">
+                                    Email is required.
+                                </div>
+                                <div *ngIf="candidateForm.get('email')?.touched && candidateForm.get('email')?.hasError('email')" class="text-danger small mt-1">
+                                    Please enter a valid email address.
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -29,6 +38,9 @@
                                     <i class="fas fa-phone me-2"></i>Mobile Number
                                 </label>
                                 <input type="tel" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Enter mobile number">
+                                <div *ngIf="candidateForm.get('mobileNumber')?.touched && candidateForm.get('mobileNumber')?.hasError('required')" class="text-danger small mt-1">
+                                    Mobile Number is required.
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -36,6 +48,12 @@
                                     <i class="fas fa-lock me-2"></i>Password
                                 </label>
                                 <input type="password" formControlName="password" class="form-control" id="password" placeholder="Enter password">
+                                <div *ngIf="candidateForm.get('password')?.touched && candidateForm.get('password')?.hasError('required')" class="text-danger small mt-1">
+                                    Password is required.
+                                </div>
+                                <div *ngIf="candidateForm.get('password')?.touched && candidateForm.get('password')?.hasError('minlength')" class="text-danger small mt-1">
+                                    Password must be at least 6 characters long.
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -47,6 +65,9 @@
                                     <option value="SuperAdmin">SuperAdmin</option> 
                                     <option value="Candidate">Candidate</option>
                                 </select>
+                                <div *ngIf="candidateForm.get('role')?.touched && candidateForm.get('role')?.hasError('required')" class="text-danger small mt-1">
+                                    Role is required.
+                                </div>
                             </div>
 
                             <div class="mb-4">
@@ -60,17 +81,17 @@
 
                             <div class="d-grid gap-2">
                                 @if (candidateForm.controls['candidateId'].value ==0) {
-                                    <button type="submit"  class="btn btn-custom btn-success-custom">
+                                                                        <button type="submit" [disabled]="candidateForm.invalid" class="btn btn-custom btn-success-custom">
                                     <i class="fas fa-save me-2"></i>Create Candidate
                                 </button>
                                 } @else {
-                                      <button type="button"  class="btn btn-custom btn-success-custom">
+                                                                            <button type="submit" [disabled]="candidateForm.invalid" class="btn btn-custom btn-success-custom">
                                     <i class="fas fa-save me-2"></i>Update Candidate
                                 </button>
                                 }
                                 
                                
-                                <button type="button" class="btn btn-custom btn-secondary-custom">
+                                <button type="button" (click)="resetForm()" class="btn btn-custom btn-secondary-custom">
                                     <i class="fas fa-redo me-2"></i>Reset Form
                                 </button>
                             </div>

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgFor, NgIf } from '@angular/common';
 import { CandidateService } from '../../core/services/candidate/candidate-service';
 import { CandidateModel } from '../../Models/class/candidate.Model';
 import { IAPIRepsone } from '../../Models/interfaces/common.Model';
@@ -8,7 +8,7 @@ import { IAPIRepsone } from '../../Models/interfaces/common.Model';
 @Component({
   selector: 'app-candidates',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule, NgFor, NgIf],
   templateUrl: './candidates.html',
   styleUrl: './candidates.css',
 })
@@ -42,11 +42,11 @@ export class Candidates implements OnInit {
   initializeForm(): void {
     this.candidateForm = new FormGroup({
       candidateId: new FormControl(0),
-      fullName: new FormControl(''),
-      email: new FormControl(''),
-      mobileNumber: new FormControl(''),
-      password: new FormControl(''),
-      role: new FormControl(''),
+      fullName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      mobileNumber: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      role: new FormControl('', [Validators.required]),
       isActive: new FormControl(false),
       createdAt: new FormControl(new Date()),
       updatedAt: new FormControl(new Date())
@@ -59,6 +59,11 @@ export class Candidates implements OnInit {
   }
 
   onSaveCandidate(): void {
+    if (this.candidateForm.invalid) {
+      this.candidateForm.markAllAsTouched();
+      return;
+    }
+
     const payload: CandidateModel = this.candidateForm.value;
 
     if (this.isEditMode) {
