@@ -20,6 +20,7 @@ export class Layout {
   roleEnum=Roles;
   
   constructor() {
+    this.userSrv.readLoggedUserData();
   }
 
   onSearch(event:any) {

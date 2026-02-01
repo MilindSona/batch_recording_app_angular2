@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { GlobalConstant } from '../../constants/global.constant';
 import { EnrollentService } from '../../core/services/enrollment/enrollment-service';
 import { RecordingService } from '../../core/services/recording/recording-service';
 import { BatchService } from '../../core/services/batch/batch-service';
 import { DatePipe } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-candidate-session-record',
@@ -18,6 +19,9 @@ export class CandidateSessionRecord {
   batchService = inject(BatchService);
   sessionRecording=signal<any[]>([]);
   selectedBatchId = signal<number | null>(null);
+ @ViewChild('videoModal') videoModalRef!:ElementRef;
+  sanitizer = inject(DomSanitizer);
+  videoUrl!: SafeResourceUrl;
 
   constructor() {
     const localData = localStorage.getItem(GlobalConstant.LOCAL_KEY_LOGIN);
@@ -37,7 +41,23 @@ export class CandidateSessionRecord {
       }
     })
   }
+getVideoId(url: string): string {
+  return url.split('youtu.be/')[1].split('?')[0];
+}
 
+  openVideoModal(url:string) {
+  if(this.videoModalRef){
+   this.videoModalRef.nativeElement.style.display = 'block';
+   const videoId = this.getVideoId(url);
+   this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`)
+  }
+}
+closeVideoModal() {
+  this.videoUrl = '';
+   if(this.videoModalRef){
+   this.videoModalRef.nativeElement.style.display = 'none';
+  }
+}
   getSessionsRecording(batchId: number) {
     this.selectedBatchId.set(batchId);
     this.batchService.getSessionsRecordingByBatchId(batchId).subscribe({

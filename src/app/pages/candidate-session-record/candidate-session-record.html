@@ -23,13 +23,38 @@
           {{batch.topicDescription}}
         </p>
 
-        <a href="https://www.youtube.com/watch?v={{batch.youtubeVideoId}}" target="_blank" class="youtube-link">
+        <button (click)="openVideoModal(batch.youtubeVideoId)" class="btn btn-primary">
           <i class="fab fa-youtube"></i>
-          Watch Video
-        </a>
+          View Recording
+        </button>
       </div>
     </div>
     }
 
+  </div>
+</div>
+
+<div class="modal" #videoModal>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" (click)="closeVideoModal()" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <iframe [src]="videoUrl" width="100%" height="400" frameborder="0" allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button"  (click)="closeVideoModal()" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
   </div>
 </div>
